@@ -93,3 +93,15 @@ executeWork(employee1);  // Output: "Getting to work"
 
 const employee2: Director | Teacher = createEmployee(1000);
 executeWork(employee2);  // Output: "Getting to director tasks"
+
+type Subjects = "Math" | "History";
+
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === "Math") {
+    return "Teaching Math";
+  } else if (todayClass === "History") {
+    return "Teaching History";
+  } else {
+    return "Unknown subject";
+  }
+}
