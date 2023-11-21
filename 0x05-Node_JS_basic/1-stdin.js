@@ -1,13 +1,22 @@
 const readline = require('readline');
 
 /**
+ * Display the result, including the entered name, and a closing message.
+ * @param {string} name - The user's name.
+ */
+function displayResult(name) {
+  console.log(`Your name is: ${name}`);
+  console.log('This important software is now closing');
+}
+
+/**
  * Prompt the user for their name interactively using readline.
  */
 function promptUser() {
   // Create an interface for reading from and writing to the console
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
   // Ask the user for their name
@@ -21,15 +30,6 @@ function promptUser() {
   rl.on('close', () => {
     process.exit(0);
   });
-}
-
-/**
- * Display the result, including the entered name, and a closing message.
- * @param {string} name - The user's name.
- */
-function displayResult(name) {
-  console.log(`Your name is: ${name}`);
-  console.log('This important software is now closing');
 }
 
 // Check if input is coming from a TTY (terminal)
