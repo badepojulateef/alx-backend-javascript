@@ -1,53 +1,16 @@
-const readline = require('readline');
+process.stdout.write('Welcome to Holberton School, what is your name?\n');
 
-/**
- * Display the result, including the entered name, and a closing message.
- * @param {string} name - The user's name.
- */
-function displayResult(name) {
-  console.log(`Your name is: ${name}`);
-  console.log('This important software is now closing');
-}
-
-/**
- * Prompt the user for their name interactively using readline.
- */
-function promptUser() {
-  // Create an interface for reading from and writing to the console
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  // Ask the user for their name
-  rl.question('Welcome to Holberton School, what is your name?\n', (name) => {
-    // Display the result and close the interface
-    displayResult(name);
-    rl.close();
-  });
-
-  // Handle program termination when the interface is closed
-  rl.on('close', () => {
-    process.exit(0);
-  });
-}
-
-// Check if input is coming from a TTY (terminal)
 if (process.stdin.isTTY) {
-  // If interactive input, prompt the user
-  promptUser();
-} else {
-  // If piped input, read asynchronously and process on 'end' event
-  let inputData = '';
-
-  // Handle piped input
   process.stdin.on('data', (data) => {
-    inputData += data;
+    process.stdout.write(`Your name is: ${data.toString()}`);
+    process.exit();
   });
-
-  process.stdin.on('end', () => {
-    // Trim the input and display the result
-    const name = inputData.trim();
-    displayResult(name);
+} else {
+  process.stdin.on('data', (data) => {
+    process.stdout.write(`Your name is: ${data.toString()}`);
+    process.exit();
+  });
+  process.on('exit', () => {
+    process.stdout.write('This important software is now closing\n');
   });
 }
