@@ -11,7 +11,7 @@ function countStudents(fileName) {
   try {
     // Read file content synchronously
     const content = fs.readFileSync(fileName, 'utf-8');
-    
+
     // Split content into lines
     const lines = content.trim().split('\n');
 
