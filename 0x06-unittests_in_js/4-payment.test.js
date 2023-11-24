@@ -1,24 +1,38 @@
-/**
- * sinon - For spying and stubbing the function. Behave exactly like the function but have access to data aboyt all calls
- * Utils - The module to test
- * expect - Assertion method in chai assertion library, making the test more readable
- * sendPaymentRequestToApi - The API using the Util module
- */
-const sendPaymentRequestToApi = require("./4-payment");
-const sinon = require("sinon");
-const Utils = require("./utils");
-const expect = require("chai").expect;
+const sinon = require('sinon');
+const assert = require('assert');
+const sendPaymentRequestToApi = require('./4-payment');
+const Utils = require('./utils');
 
-describe("sendPaymentRequestToApi", function () {
-	it("Test the sendPaymentRequestToApi endpoint but fix it's return value using stub", function () {
-		const spiedConsole = sinon.spy(console);
-		const stubFxn = sinon.stub(Utils, "calculateNumber");
-		stubFxn.returns(10);
-		sendPaymentRequestToApi(100, 20);
-		expect(stubFxn.calledWith("SUM", 100, 20)).to.be.true;
-		expect(stubFxn((100, 20))).to.be.equal(10);
-		expect(spiedConsole.log.calledWith("The total is: 10")).to.be.true;
-		stubFxn.restore(); //Restore so it does not affect other test
-		spiedConsole.log.restore(); //Restore so it does not affect other test
-	});
+describe('sendPaymentRequestToApi', function () {
+  let sandbox;
+
+  beforeEach(function () {
+    // Create a sandbox for each test
+    sandbox = sinon.createSandbox();
+    sandbox.stub(Utils, 'calculateNumber').returns(10);
+    // sandbox.returns(10);
+  });
+
+  afterEach(function () {
+    // Restore the sandbox to clean up stubs and spies
+    sandbox.restore();
+  });
+
+  it('should stub calculateNumber and log the correct message', function () {
+    // Stub the calculateNumber function
+    //const calculateNumberStub = sandbox.stub(Utils, 'calculateNumber').returns(10);
+    //const res = Utils.calculateNumber('SUM', )
+
+    // Create a spy for console.log
+    const consoleLogSpy = sandbox.spy(console, 'log');
+
+    // Call the function
+    sendPaymentRequestToApi(100, 20);
+
+    // Verify the stub is called with the correct arguments
+    assert(Utils.calculateNumber.calledWith('SUM', 100, 20));
+
+    // Verify the console.log spy is called with the correct message
+    assert(consoleLogSpy.calledWith('The total is: 10'));
+  });
 });
