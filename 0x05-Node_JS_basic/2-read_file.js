@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Using the database database.csv (provided in project description),
     create a function countStudents in the file 2-read_file.js
